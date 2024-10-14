@@ -23,3 +23,14 @@
 /plugins-sdk/dist
 /plugins-sdk/lib
 test-results
+
+# Liferay specific files
+.gradle/
+build/
+.idea/
+target/
+.DS_Store
+
+# Gradle files
+.gradle/
+build/
