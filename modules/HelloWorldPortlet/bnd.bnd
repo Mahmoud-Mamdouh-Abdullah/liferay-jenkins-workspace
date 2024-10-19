@@ -1,4 +1,0 @@
-Bundle-Name: HelloWorldPortlet
-Bundle-SymbolicName: com.example.helloworld
-Bundle-Version: 1.0.0
-Export-Package: com.example.helloworld.constants
