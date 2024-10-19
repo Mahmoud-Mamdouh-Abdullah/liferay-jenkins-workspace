@@ -1,4 +1,0 @@
-Bundle-Name: hello-jenkins
-Bundle-SymbolicName: com.linkdev.hello.jenkins.portal
-Bundle-Version: 1.0.0
-Export-Package: com.linkdev.hello.jenkins.portal.constants
