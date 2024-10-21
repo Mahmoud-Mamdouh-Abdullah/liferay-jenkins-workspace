@@ -16,19 +16,22 @@ jobs:
 
       # Step 2: Clean, Build, and Deploy the Liferay modules
       - name: Clean, Build, and Deploy Liferay modules
+        shell: wsl -d Ubuntu-22.04 --exec /bin/bash -c
         run: |
           ./gradlew clean build deploy
 
       # Step 3: Move JAR files to Liferay deploy folders
       - name: Move JAR files to Liferay deploy folder
-        shell: bash
+        shell: wsl -d Ubuntu-22.04 --exec /bin/bash -c
         run: |
+          deploy_path="/mnt/d/Liferay/liferay-dxp/deploy/"
           echo "Deploying JAR files to $deploy_path"
           for jar in modules/*/build/libs/*.jar; do
-            cp "$jar" ${{ vars.LIFERAY_HOME }}/deploy
+            cp "$jar" "$deploy_path"
           done
 
       # Step 4: (Optional) Verify Deployment
       - name: Verify Deployment
+        shell: wsl -d Ubuntu-22.04 --exec /bin/bash -c
         run: |
           echo "Deployment completed. JAR files moved to the deploy folder."
