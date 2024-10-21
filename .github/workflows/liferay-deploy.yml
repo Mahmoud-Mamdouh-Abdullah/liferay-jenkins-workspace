@@ -3,7 +3,7 @@ name: Build and Deploy Liferay Modules
 on:
   push:
     branches:
-      - main  # Adjust this to the branch you want to trigger the pipeline on
+      - master  # Adjust this to the branch you want to trigger the pipeline on
 
 jobs:
   build:
