@@ -22,7 +22,7 @@ jobs:
       # Step 3: Move JAR files to Liferay deploy folders
       - name: Move JAR files to Liferay deploy folder
         run: |
-          Foreach ($jar in (modules/*/build/libs/*.jar)) {
+          Foreach ($jar in (modules\*\build\libs\*.jar)) {
             cp "$jar" ${{ vars.LIFERAY_HOME }}\deploy
           }
 
