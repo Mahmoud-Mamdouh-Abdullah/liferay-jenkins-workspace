@@ -21,11 +21,12 @@ jobs:
 
       # Step 3: Move JAR files to Liferay deploy folder
       - name: Move JAR files to Liferay deploy folder
+        shell: pwsh  # Use PowerShell
         run: |
-          # Adjust the path according to your Liferay bundle's structure
-          for jar in modules/*/build/libs/*.jar; do
-            cp "$jar" ${{ vars.LIFERAY_HOME }}/deploy/
-          done
+          $liferayDeployDir = "${{ vars.LIFERAY_HOME }}\deploy"
+          Get-ChildItem -Path "modules\*\build\libs\*.jar" | ForEach-Object {
+            Copy-Item -Path $_.FullName -Destination $liferayDeployDir
+          }
 
       # Step 4: (Optional) Verify Deployment
       - name: Verify Deployment
