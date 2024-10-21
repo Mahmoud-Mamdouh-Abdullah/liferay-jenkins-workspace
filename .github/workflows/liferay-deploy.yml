@@ -22,8 +22,9 @@ jobs:
       - name: Move JAR files to Liferay deploy folder
         shell: pwsh  # Use PowerShell
         run: |
-          Get-ChildItem "modules/*/build/libs/*.jar" | ForEach-Object {
-              Copy-Item $_.FullName "D:\Liferay\liferay-dxp\deploy\"
+          Get-ChildItem "modules\\*\\build\\libs\\*.jar" | 
+          ForEach-Object {
+              Copy-Item $_.FullName "D:\\Liferay\\liferay-dxp\\deploy"
           }
 
       # Step 4: (Optional) Verify Deployment
