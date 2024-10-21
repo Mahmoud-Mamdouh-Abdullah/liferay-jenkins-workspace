@@ -21,7 +21,6 @@ jobs:
 
       # Step 3: Move JAR files to Liferay deploy folders
       - name: Move JAR files to Liferay deploy folder
-        shell: wsl -d Ubuntu-22.04 --exec /bin/bash -c
         run: |
           deploy_path="/mnt/d/Liferay/liferay-dxp/deploy/"
           echo "Deploying JAR files to $deploy_path"
@@ -31,6 +30,5 @@ jobs:
 
       # Step 4: (Optional) Verify Deployment
       - name: Verify Deployment
-        shell: wsl -d Ubuntu-22.04 --exec /bin/bash -c
         run: |
           echo "Deployment completed. JAR files moved to the deploy folder."
