@@ -25,7 +25,7 @@ jobs:
         run: |
           echo "Deploying JAR files to $deploy_path"
           for jar in modules/*/build/libs/*.jar; do
-            cp "$jar" ${{ vars.LIFERAY_HOME }}/deploy
+            cp "$jar" ${{ vars.LIFERAY_HOME }}\deploy
           done
 
       # Step 4: (Optional) Verify Deployment
