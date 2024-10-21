@@ -19,13 +19,13 @@ jobs:
         run: |
           ./gradlew clean build deploy  # Clean, build, and deploy using the Gradle wrapper
 
+      # Step 3: Move JAR files to Liferay deploy folder
       - name: Move JAR files to Liferay deploy folder
-        shell: pwsh  # Use PowerShell
+        shell: bash  # Specify Bash shell for this step
         run: |
-          Get-ChildItem "modules\\*\\build\\libs\\*.jar" | 
-          ForEach-Object {
-              Copy-Item $_.FullName "D:\\Liferay\\liferay-dxp\\deploy"
-          }
+          for jar in modules/*/build/libs/*.jar; do
+            cp "$jar" ${{ vars.LIFERAY_HOME }}/deploy/
+          done
 
       # Step 4: (Optional) Verify Deployment
       - name: Verify Deployment
