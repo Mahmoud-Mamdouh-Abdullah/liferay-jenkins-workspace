@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # Or use self-hosted runner if needed
+    runs-on: self-hosted  # Or use self-hosted runner if needed
     
     steps:
       # Step 1: Checkout the repository
