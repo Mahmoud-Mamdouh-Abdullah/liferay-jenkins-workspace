@@ -14,68 +14,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Step 2: Build the Liferay workspace using the Gradle wrapper
-      - name: Build Liferay modules
-        run: ./gradlew clean build  # Use the wrapper to build with the specified Gradle version
-
-      # Step 3: Deploy to local Liferay bundle
-      - name: Deploy to local Liferay
-        run: ./gradlew deploy  # Use the wrapper for deployment
-        env:
-          LIFERAY_HOME: ${{ vars.LIFERAY_HOME }}
-Key Points
-Using the Wrapper: By running ./gradlew, you are invoking the Gradle wrapper, which will use the version specified in your gradle-wrapper.properties file (in this case, 6.6.1). This ensures that anyone building the project, regardless of their local environment, will use the same version of Gradle.
-
-No Need for Additional Gradle Setup: Since you are using the Gradle wrapper, you do not need to add any additional steps to set up Gradle in the workflow.
-
-Confirm Local Environment
-Before you push your changes:
-
-Make sure the gradlew file has executable permissions (especially on Unix-like systems) by running:
-bash
-Copy code
-chmod +x gradlew
-Next Steps
-Save the updated workflow file.
-Push the changes to your master branch.
-Monitor the GitHub Actions tab to ensure the workflow is triggered and completes successfully.
-If everything is set up correctly, you should see the workflow execute upon pushing changes. If you encounter any further issues, let me know, and we can troubleshoot together!
-
-
-
-
-
-
-You said:
-is this pipeline containing the step to move the jars from modules/*/build/libs to deploy folder on the liferay bindle dir /?
-ChatGPT said:
-ChatGPT
-The current workflow does not explicitly include a step to move the generated JAR files from the modules/*/build/libs directory to the deploy folder of your Liferay bundle. To achieve this, you can add a step to copy the JAR files to the appropriate directory after the build step and before the deploy step.
-
-Here’s how you can modify the workflow to include this step:
-
-Updated Workflow with JAR Deployment Step
-yaml
-Copy code
-name: Build and Deploy Liferay Modules
-
-on:
-  push:
-    branches:
-      - master
-
-jobs:
-  build:
-    runs-on: self-hosted
-
-    steps:
-      # Step 1: Checkout the repository
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      # Step 2: Build the Liferay workspace using the Gradle wrapper
-      - name: Build Liferay modules
-        run: ./gradlew clean build deploy  # Use the wrapper to build with the specified Gradle version
+      # Step 2: Clean, Build, and Deploy the Liferay modules
+      - name: Clean, Build, and Deploy Liferay modules
+        run: |
+          ./gradlew clean build deploy  # Clean, build, and deploy using the Gradle wrapper
 
       # Step 3: Move JAR files to Liferay deploy folder
       - name: Move JAR files to Liferay deploy folder
@@ -84,3 +26,8 @@ jobs:
           for jar in modules/*/build/libs/*.jar; do
             cp "$jar" ${{ vars.LIFERAY_HOME }}/deploy/
           done
+
+      # Step 4: (Optional) Verify Deployment
+      - name: Verify Deployment
+        run: |
+          echo "Deployment completed. JAR files moved to the deploy folder."
