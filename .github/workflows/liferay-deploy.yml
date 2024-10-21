@@ -23,10 +23,9 @@ jobs:
       - name: Move JAR files to Liferay deploy folder
         shell: bash
         run: |
-          deploy_path="/mnt/d/Liferay/liferay-dxp/deploy/"
           echo "Deploying JAR files to $deploy_path"
           for jar in modules/*/build/libs/*.jar; do
-            cp "$jar" "$deploy_path"
+            cp "$jar" ${{ vars.LIFERAY_HOME }}/deploy
           done
 
       # Step 4: (Optional) Verify Deployment
