@@ -19,19 +19,31 @@ jobs:
         run: |
           ./gradlew clean build deploy
 
-      # Step 3: Move JAR files to Liferay deploy folder
+      # Step 3: Remove old JAR files from osgi/modules
+      - name: Clean old JAR files from osgi/modules
+        run: |
+          $osgi_modules_path = "${{ vars.LIFERAY_HOME }}\osgi\modules"
+          echo "Removing old JAR files from $osgi_modules_path"
+
+          # Find and remove old JAR files in osgi/modules
+          Get-ChildItem -Path "$osgi_modules_path\*.jar" | ForEach-Object {
+              Remove-Item -Path $_.FullName
+              echo "Removed: $($_.FullName)"
+          }
+
+      # Step 4: Move new JAR files to Liferay deploy folder
       - name: Move JAR files to Liferay deploy folder
         run: |
-          $deploy_path = "${{ vars.LIFERAY_HOME }}\deploy"  # Set the deploy path from the variable
-          echo "Deploying JAR files to $deploy_path"
+          $deploy_path = "${{ vars.LIFERAY_HOME }}\deploy"
+          echo "Deploying new JAR files to $deploy_path"
 
-          # Get all JAR files and copy them to the deploy folder
+          # Get all new JAR files and copy them to the deploy folder
           Get-ChildItem -Path "modules\*\build\libs\*.jar" | ForEach-Object {
               Copy-Item -Path $_.FullName -Destination $deploy_path
               echo "Copied: $($_.FullName) to $deploy_path"
           }
 
-      # Step 4: (Optional) Verify Deployment
+      # Step 5: (Optional) Verify Deployment
       - name: Verify Deployment
         run: |
           echo "Deployment completed. JAR files moved to the deploy folder."
