@@ -19,7 +19,7 @@ jobs:
         run: |
           ./gradlew clean build deploy  # Clean, build, and deploy using the Gradle wrapper
 
-      # Step 3: Move JAR files to Liferay deploy folder
+      # Step 3: Move JAR files to Liferay deploy folders
       - name: Move JAR files to Liferay deploy folder
         shell: bash  # Specify Bash shell for this step
         run: |
