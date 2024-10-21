@@ -16,14 +16,19 @@ jobs:
 
       # Step 2: Clean, Build, and Deploy the Liferay modules
       #- name: Clean, Build, and Deploy Liferay modules
-       # run: |
-        #  ./gradlew clean build deploy
+        #run: |
+          #./gradlew clean build deploy
 
-      # Step 3: Move JAR files to Liferay deploy folders
+      # Step 3: Move JAR files to Liferay deploy folder
       - name: Move JAR files to Liferay deploy folder
         run: |
-          Foreach ($jar in (modules\*\build\libs\*.jar)) {
-            cp "$jar" ${{ vars.LIFERAY_HOME }}\deploy
+          $deploy_path = "${{ vars.LIFERAY_HOME }}\deploy"  # Set the deploy path from the variable
+          echo "Deploying JAR files to $deploy_path"
+
+          # Get all JAR files and copy them to the deploy folder
+          Get-ChildItem -Path "modules\*\build\libs\*.jar" | ForEach-Object {
+              Copy-Item -Path $_.FullName -Destination $deploy_path
+              echo "Copied: $($_.FullName) to $deploy_path"
           }
 
       # Step 4: (Optional) Verify Deployment
