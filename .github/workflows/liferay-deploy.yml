@@ -24,9 +24,9 @@ jobs:
         run: |
           deploy_path="/mnt/d/Liferay/liferay-dxp/deploy/"
           echo "Deploying JAR files to $deploy_path"
-          for jar in modules/*/build/libs/*.jar; do
+          Foreach ($jar in (modules/*/build/libs/*.jar)) {
             cp "$jar" "$deploy_path"
-          done
+          }
 
       # Step 4: (Optional) Verify Deployment
       - name: Verify Deployment
