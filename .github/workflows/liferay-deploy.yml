@@ -17,17 +17,17 @@ jobs:
       # Step 2: Clean, Build, and Deploy the Liferay modules
       - name: Clean, Build, and Deploy Liferay modules
         run: |
-          ./gradlew clean build deploy  # Clean, build, and deploy using the Gradle wrapper
+          ./gradlew clean build deploy
 
       # Step 3: Move JAR files to Liferay deploy folders
       - name: Move JAR files to Liferay deploy folder
-          run: |
-            deploy_path="/mnt/d/Liferay/liferay-dxp/deploy/"  # Adjust path as necessary
-            echo "Deploying JAR files to $deploy_path"
-            for jar in modules/*/build/libs/*.jar; do
-              cp "$jar" "$deploy_path"
-            done
-          shell: bash
+        shell: bash
+        run: |
+          deploy_path="/mnt/d/Liferay/liferay-dxp/deploy/"
+          echo "Deploying JAR files to $deploy_path"
+          for jar in modules/*/build/libs/*.jar; do
+            cp "$jar" "$deploy_path"
+          done
 
       # Step 4: (Optional) Verify Deployment
       - name: Verify Deployment
