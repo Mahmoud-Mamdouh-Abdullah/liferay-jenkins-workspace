@@ -15,9 +15,9 @@ jobs:
         uses: actions/checkout@v2
 
       # Step 2: Clean, Build, and Deploy the Liferay modules
-      #- name: Clean, Build, and Deploy Liferay modules
-        #run: |
-          #./gradlew clean build deploy
+      - name: Clean, Build, and Deploy Liferay modules
+        run: |
+          ./gradlew clean build deploy
 
       # Step 3: Move JAR files to Liferay deploy folder
       - name: Move JAR files to Liferay deploy folder
